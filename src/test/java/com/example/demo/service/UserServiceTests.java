@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.service;
 
 import com.example.demo.client.ThirdPartyUserDataClient;
 import com.example.demo.data.User;
@@ -37,7 +37,7 @@ public class UserServiceTests {
 	private UserRepository userRepository;
 
 	@Test
-	public void createUpdateDeleteUserTest() {
+	public void createUpdateUserTest() {
 
 		String additionalData = org.apache.commons.lang3.RandomStringUtils.random(5);
 		Mockito.when(thirdPartyUserDataClient.getAdditionalUserData(ArgumentMatchers.anyLong())).thenReturn(additionalData);
@@ -60,12 +60,6 @@ public class UserServiceTests {
 		user = userService.updateUser(user);
 
 		Assert.assertEquals(UserState.CREATED, user.getState());
-
-		/*userService.deleteUser(user);
-
-		user = userService.getUserById(user.getId());
-
-		Assert.assertNull(user);*/
 
 	}
 
