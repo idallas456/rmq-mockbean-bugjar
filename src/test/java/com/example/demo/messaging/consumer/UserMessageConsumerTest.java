@@ -1,6 +1,7 @@
 package com.example.demo.messaging.consumer;
 
 import com.example.demo.service.UserService;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,5 +17,9 @@ public class UserMessageConsumerTest {
 	private UserService userService;
 
 
+	@Test
+	public void test(){
+
+	}
 
 }
