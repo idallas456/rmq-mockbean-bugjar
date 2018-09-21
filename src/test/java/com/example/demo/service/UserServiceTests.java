@@ -5,24 +5,20 @@ import com.example.demo.data.User;
 import com.example.demo.data.UserState;
 import com.example.demo.messaging.consumer.UserMessageConsumer;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
 import org.awaitility.Awaitility;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-import java.util.concurrent.Callable;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserServiceTests {
+public class UserServiceTests extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private UserService userService;
@@ -31,12 +27,13 @@ public class UserServiceTests {
 	private UserMessageConsumer userMessageConsumer;
 
 	@MockBean
+	@Autowired
 	private ThirdPartyUserDataClient thirdPartyUserDataClient;
 
 	@Autowired
 	private UserRepository userRepository;
 
-	@Test
+	@Test(priority = 2)
 	public void createUpdateUserTest() {
 
 		String additionalData = org.apache.commons.lang3.RandomStringUtils.random(5);
