@@ -37,11 +37,11 @@ public class UserServiceTests {
 
 		Assert.assertEquals(UserState.CREATED, user.getState());
 
-		userService.deleteUser(user);
+		/*userService.deleteUser(user);
 
 		user = userService.getUserById(user.getId());
 
-		Assert.assertNull(user);
+		Assert.assertNull(user);*/
 
 	}
 

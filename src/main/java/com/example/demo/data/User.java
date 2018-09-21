@@ -19,6 +19,8 @@ public class User {
 
 	private String name;
 
+	private String additionalData;
+
 	public UserState getState() {
 		return state;
 	}
@@ -41,5 +43,13 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAdditionalData() {
+		return additionalData;
+	}
+
+	public void setAdditionalData(String additionalData) {
+		this.additionalData = additionalData;
 	}
 }
