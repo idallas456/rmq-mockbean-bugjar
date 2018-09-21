@@ -8,6 +8,7 @@ import com.example.demo.repository.UserRepository;
 import org.awaitility.Awaitility;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,6 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static com.example.demo.config.DemoMessagingConfig.USER_MESSAGING_QUEUE;
 
 
 @SpringBootTest
@@ -33,8 +36,13 @@ public class UserServiceTests extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private RabbitAdmin rabbitAdmin;
+
 	@Test(priority = 2)
 	public void createUpdateUserTest() {
+
+		logger.info("=============== CONSUMERS: " + rabbitAdmin.getQueueProperties(USER_MESSAGING_QUEUE).get(RabbitAdmin.QUEUE_CONSUMER_COUNT));
 
 		String additionalData = org.apache.commons.lang3.RandomStringUtils.random(5);
 		Mockito.when(thirdPartyUserDataClient.getAdditionalUserData(ArgumentMatchers.anyLong())).thenReturn(additionalData);

@@ -8,6 +8,9 @@ import org.awaitility.Awaitility;
 
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,20 +20,29 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.example.demo.config.DemoMessagingConfig.USER_MESSAGING_QUEUE;
+
 
 @SpringBootTest
 public class UserMessageConsumerTest extends AbstractTestNGSpringContextTests {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RabbitAdmin rabbitAdmin;
 
 	@MockBean
 	@Autowired
 	private ThirdPartyUserDataClient thirdPartyUserDataClient;
-
-
+	
 	@Test(priority = 2)
 	public void testFailureToCallThirdParty(){
+
+
+		logger.info("=============== CONSUMERS: " + rabbitAdmin.getQueueProperties(USER_MESSAGING_QUEUE).get(RabbitAdmin.QUEUE_CONSUMER_COUNT));
 
 		Mockito.when(thirdPartyUserDataClient.getAdditionalUserData(ArgumentMatchers.anyLong())).thenThrow(new HttpClientErrorException(HttpStatus.BAD_GATEWAY));
 
